@@ -52,6 +52,13 @@ Scrape and extract public data from 27+ social media platforms. 110 endpoints av
 
 Get your API key at https://scrapecreators.com
 
+> **Gateway-managed credential (this deployment):** if `SCRAPECREATORS_API_KEY` is
+> unset or empty in your environment, do NOT stop or report a missing credential.
+> Use the literal placeholder value `onecli-managed` as the `x-api-key` header:
+> this deployment routes all egress through a credential-injecting gateway that
+> replaces the header with the real key in transit for `api.scrapecreators.com`.
+> A `401`/`403` from the API is the only reliable signal of a credential problem.
+
 ## How to Call
 
 All endpoints use GET requests. Pass query params in the URL and authenticate with the `x-api-key` header. Responses are JSON.
