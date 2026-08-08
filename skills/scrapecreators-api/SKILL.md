@@ -1,15 +1,15 @@
 ---
 name: scrapecreators-api
 description: >-
-  Scrape and extract public data from 27+ social media platforms using the
-  ScrapeCreators REST API. Covers TikTok, Instagram, YouTube, LinkedIn,
-  Facebook, Twitter/X, Reddit, Threads, Bluesky, Pinterest, Snapchat, Twitch,
-  Kick, Truth Social, TikTok Shop, Google, and link-in-bio services (Linktree,
-  Komi, Pillar, Linkbio, Linkme, Amazon Shop). Use when the user asks to
-  scrape, fetch, extract, search, or look up social media profiles, posts,
-  videos, reels, comments, transcripts, followers, ads, hashtags, trending
-  content, or engagement metrics from any social platform. Also use when user
-  mentions ScrapeCreators, social media API, ad library, or creator data.
+  Direct ScrapeCreators REST API access for public data from 27+ social
+  platforms (TikTok, Instagram, YouTube, LinkedIn, Facebook, Twitter/X,
+  Reddit, Threads, Bluesky, Pinterest, Snapchat, Twitch, Kick, Truth Social,
+  TikTok Shop, Google, and link-in-bio services). Only invoke when the user
+  explicitly asks for social media analysis, mentions ScrapeCreators /
+  "scrape creators", explicitly requests platform data pulls (profiles,
+  posts, comments, transcripts, followers, ads, engagement metrics), or when
+  another skill directs you here. Do not invoke for casual questions that
+  merely touch on social media.
 allowed-tools: Bash, Read, Write, WebFetch
 homepage: https://scrapecreators.com
 metadata:
@@ -51,6 +51,13 @@ Scrape and extract public data from 27+ social media platforms. 110 endpoints av
 **Base URL:** `https://api.scrapecreators.com`
 
 Get your API key at https://scrapecreators.com
+
+> **Gateway-managed credential (this deployment):** if `SCRAPECREATORS_API_KEY` is
+> unset or empty in your environment, do NOT stop or report a missing credential.
+> Use the literal placeholder value `onecli-managed` as the `x-api-key` header:
+> this deployment routes all egress through a credential-injecting gateway that
+> replaces the header with the real key in transit for `api.scrapecreators.com`.
+> A `401`/`403` from the API is the only reliable signal of a credential problem.
 
 ## How to Call
 
@@ -112,7 +119,7 @@ Map user intent to the right endpoint. After selecting an endpoint, fetch its Op
 | Instagram posts | `/v2/instagram/user/posts` | handle | `jane` |
 | Instagram reels | `/v1/instagram/user/reels` | handle or user_id | `jane` or `2700692569` |
 | Instagram highlights | `/v1/instagram/user/highlights` | handle or user_id | `jane` or `2700692569` |
-| YouTube videos | `/v1/youtube/channel/videos` | handle or channelId | `ThePatMcAfeeShow` |
+| YouTube videos | `/v1/youtube/channel-videos` | handle or channelId | `ThePatMcAfeeShow` |
 | YouTube shorts | `/v1/youtube/channel/shorts` | handle or channelId | `starterstory` |
 | YouTube playlist | `/v1/youtube/playlist` | playlist_id | `PLP32wGpgzmIlInfgKVFfCwVsxgGqZNIiS` |
 | LinkedIn posts | `/v1/linkedin/company/posts` | url | `https://linkedin.com/company/shopify` |
@@ -120,7 +127,7 @@ Map user intent to the right endpoint. After selecting an endpoint, fetch its Op
 | Facebook reels | `/v1/facebook/profile/reels` | url | `https://www.facebook.com/Spurs` |
 | Facebook photos | `/v1/facebook/profile/photos` | url | `https://www.facebook.com/Spurs` |
 | Facebook group posts | `/v1/facebook/group/posts` | url or group_id | `742354120555345` |
-| Twitter tweets | `/v1/twitter/user/tweets` | handle | `elonmusk` |
+| Twitter tweets | `/v1/twitter/user-tweets` | handle | `elonmusk` |
 | Reddit posts | `/v1/reddit/subreddit` | subreddit | `AskReddit` |
 | Threads posts | `/v1/threads/user/posts` | handle | `zuck` |
 | Bluesky posts | `/v1/bluesky/user/posts` | handle or user_id | `jay.bsky.team` |
